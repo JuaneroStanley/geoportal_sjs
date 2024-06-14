@@ -1,0 +1,25 @@
+.neworder_everything {
+	display: flex;
+	flex-direction: column;
+}
+
+.neworder_topbanner {
+	display: flex;
+	flex-direction: row;
+	height: 10vh;
+	width: 100vw;
+}
+
+.neworder_midbanner {
+	display: flex;
+	flex-direction: column;
+	height: 90vh;
+	width: 100vw;
+	position: relative;
+}
+
+.neworder_title {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
