@@ -1,7 +1,6 @@
-"use client";
 import React from "react";
 import "./Logo.css";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 function Logo() {
   return (
@@ -10,7 +9,7 @@ function Logo() {
         <div className="left_logo">FOOD.</div>
         <div className="right_logo">GIVEME</div>
       </div>
-      <Link to="/">
+      <Link href="/">
         <button className="logo_btn"></button>
       </Link>
     </div>
