@@ -1,0 +1,64 @@
+.neworder_everything {
+	display: flex;
+	flex-direction: column;
+}
+
+.neworder_topbanner {
+	display: flex;
+	flex-direction: row;
+	height: 10vh;
+	width: 100vw;
+}
+
+.neworder_midbanner {
+	display: flex;
+	margin-top: 10px;
+	flex-direction: row;
+	height: 85vh;
+	width: 100vw;
+	position: relative;
+}
+
+.neworder_map_wrapper {
+	width: 70vw;
+	height: 80vh;
+}
+.neworder_map {
+	width: 100%;
+	height: 100%;
+	margin-left: 10px;
+	border: 1px solid black;
+}
+
+.neworder_right {
+	display: flex;
+	flex-direction: column;
+	width: 30vw;
+	margin: 0px 10px;
+}
+.neworder_list_wrapper {
+	height: 70vh;
+	background-color: bisque;
+}
+
+.neworder_button {
+	width: 100%;
+	height: 63px;
+}
+
+.neworder_midbanner ::-webkit-scrollbar {
+	width: 10px;
+}
+
+.neworder_midbanner ::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+.neworder_midbanner ::-webkit-scrollbar-thumb {
+	background: #d2a124;
+	border-radius: 10px;
+}
+
+.neworder_midbanner ::-webkit-scrollbar-thumb:hover {
+	background: #ffc400;
+}
