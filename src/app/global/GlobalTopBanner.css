@@ -1,12 +1,12 @@
 .global_top_banner {
-	height: 10vh;
-	width: 100vw;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	box-sizing: border-box;
-	padding-right: 5px;
-	position: absolute;
+  height: 10vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding-right: 20px;
+  position: absolute;
 }
 
 .item_right {
