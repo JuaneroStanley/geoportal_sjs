@@ -1,48 +1,80 @@
 import React from "react";
-import { menu } from "../global/data";
-import { IconButton, Stack } from "@mui/material";
-import "./Order.css";
 import {
-  Avatar,
-  Button,
-  CardActionArea,
+  IconButton,
+  Stack,
   List,
   ListItem,
-  ListItemAvatar,
-  ListItemButton,
   ListItemText,
-  Rating,
+  Typography,
+  Button,
+  Avatar,
 } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import Link from "next/link";
-export default function Order({ restaurantId, onBackClick }) {
+import DeleteIcon from "@mui/icons-material/Delete";
+import "./Order.css";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+
+export default function Order({ restaurantId, menuId, onBackClick }) {
   const [menuData, setMenuData] = React.useState(null);
   const [cart, setCart] = React.useState({});
   const [total, setTotal] = React.useState(0);
-  React.useEffect(() => {
-    setMenuData(menu[restaurantId]);
-  }, [restaurantId]);
+  const [geom, setGeom] = React.useState(null);
+  const router = useRouter();
 
+  // Fetch menu data when the component mounts or restaurantId changes
+  React.useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const response = await fetch(`/api/menu/${menuId}`);
+        const data = await response.json();
+        console.log("Fetched menu JSON:", data);
+        const menu = data[0];
+        const combinedMenuData = menu.item_names.map((name, index) => ({
+          id: index,
+          name: name,
+          price: menu.item_prices[index],
+        }));
+
+        setMenuData(combinedMenuData);
+      } catch (error) {
+        console.error("Failed to fetch menu", error);
+      }
+    };
+    const fetchGeom = async () => {
+      try {
+        const response = await fetch(`/api/restaurants/geom/${restaurantId}`);
+        const data = await response.json();
+        console.log("Fetched geom:", data); // Log data to console
+        setGeom(data.geom);
+      } catch (error) {
+        console.error("Failed to fetch geom", error);
+      }
+    };
+
+    fetchGeom();
+    fetchMenu();
+  }, [menuId, restaurantId]);
+
+  // Calculate total whenever the cart changes
   React.useEffect(() => {
     calculateTotal();
-  }, [cart]);
+  });
 
   const calculateTotal = () => {
     let newTotal = 0;
-    Object.entries(cart).forEach(([itemId, count]) => {
-      const menuItem = menuData.find((item) => item.id === parseInt(itemId));
-      if (menuItem) {
-        newTotal += menuItem.price * count;
-      }
-    });
+    if (menuData) {
+      Object.entries(cart).forEach(([itemId, count]) => {
+        const menuItem = menuData.find((item) => item.id === parseInt(itemId));
+        if (menuItem) {
+          newTotal += menuItem.price * count;
+        }
+      });
+    }
     setTotal(newTotal.toFixed(2));
   };
-  if (!menuData) {
-    return <div>Loading menu...</div>;
-  }
+
   const addToCart = (itemId) => {
     setCart((prevCart) => {
       const newCart = { ...prevCart };
@@ -74,6 +106,50 @@ export default function Order({ restaurantId, onBackClick }) {
       return newCart;
     });
   };
+
+  const onPlaceOrderClick = async () => {
+    if (!geom) {
+      console.error("Geom not loaded");
+      return;
+    }
+
+    const highestKey = Math.max(...Object.keys(cart).map(Number));
+    const items = Array.from({ length: highestKey + 1 }, (_, i) => {
+      const key = i;
+      return cart[key] !== undefined ? cart[key] : 0;
+    });
+
+    const order = {
+      geom,
+      restaurant_id: restaurantId,
+      items,
+    };
+
+    console.log("Placing order:", order);
+    try {
+      const response = await fetch("/api/orders/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(order),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to place order");
+      }
+
+      const result = await response.json();
+      console.log("Order placed successfully:", result);
+      router.push("./trackorder");
+    } catch (error) {
+      console.error("Error placing order:", error);
+    }
+  };
+
+  if (!menuData) {
+    return <div>Loading menu...</div>;
+  }
 
   return (
     <div>
@@ -173,6 +249,7 @@ export default function Order({ restaurantId, onBackClick }) {
             variant="contained"
             color="primary"
             style={{ fontSize: "26px" }}
+            onClick={onPlaceOrderClick}
           >
             Place Order
           </Button>

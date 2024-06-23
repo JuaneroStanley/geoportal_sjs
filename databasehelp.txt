@@ -1,0 +1,41 @@
+-- Table: public.menus
+
+-- DROP TABLE IF EXISTS public.menus;
+
+CREATE TABLE IF NOT EXISTS public.menus
+(
+    id bigint NOT NULL DEFAULT nextval('menus_id_seq'::regclass),
+    item_names text[] COLLATE pg_catalog."default" NOT NULL,
+    item_prices numeric(10,2)[] NOT NULL,
+    CONSTRAINT menus_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.menus
+    OWNER to postgres;
+
+
+
+-- Table: public.restaurants
+
+-- DROP TABLE IF EXISTS public.restaurants;
+
+CREATE TABLE IF NOT EXISTS public.restaurants
+(
+    id bigint NOT NULL,
+    geom geometry(Point,4326),
+    name text COLLATE pg_catalog."default",
+    menu_id bigint,
+    address text COLLATE pg_catalog."default",
+    rating numeric,
+    description text COLLATE pg_catalog."default",
+    image text COLLATE pg_catalog."default",
+    CONSTRAINT restaurants_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.restaurants
+    OWNER to postgres;
+

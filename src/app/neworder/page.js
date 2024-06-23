@@ -1,9 +1,6 @@
 "use client";
 import "./NewOrder.css";
 import GlobalTopBanner from "../global/GlobalTopBanner";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import {
   Avatar,
@@ -19,15 +16,29 @@ import {
 import React, { useMemo, useState } from "react";
 
 import Image from "next/image";
-import { restaurants } from "../global/data";
-import dynamic from "next/dynamic";
 import { MapContainer, Marker, TileLayer, LayersControl } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import Head from "next/head";
 import Order from "./Order.js";
+
 function NewOrder() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [isOrder, setIsOrder] = React.useState(false);
+  const [restaurants, setRestaurants] = useState([]);
+
+  React.useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        const response = await fetch("/api/restaurants");
+        const data = await response.json();
+        console.log("Fetched restaurants:", data); // Log data to console
+        setRestaurants(data);
+      } catch (error) {
+        console.error("Failed to fetch restaurants", error);
+      }
+    };
+    fetchRestaurants();
+  }, []);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -95,8 +106,9 @@ function NewOrder() {
                             <Image
                               src={restaurant.image}
                               alt={restaurant.name}
-                              layout="fill"
-                              objectFit="contain"
+                              fill
+                              style={{ objectFit: "contain" }}
+                              sizes="300px"
                             />
                           </Avatar>
                         </ListItemAvatar>
@@ -118,8 +130,8 @@ function NewOrder() {
                                   readOnly={true}
                                 />{" "}
                               </Typography>
-                              <Typography>
-                                {restaurant.desctiption +
+                              <Typography component="span">
+                                {restaurant.description +
                                   " — " +
                                   restaurant.address}
                               </Typography>
@@ -143,7 +155,11 @@ function NewOrder() {
             </div>
           </div>
         ) : (
-          <Order restaurantId={selectedIndex} onBackClick={handleBackClick} />
+          <Order
+            restaurantId={restaurants[selectedIndex].id}
+            onBackClick={handleBackClick}
+            menuId={restaurants[selectedIndex].menu_id}
+          />
         )}
       </div>
     </>

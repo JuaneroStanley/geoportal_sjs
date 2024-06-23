@@ -1,0 +1,64 @@
+.trackorder_everything {
+  display: flex;
+  flex-direction: column;
+}
+
+.trackorder_topbanner {
+  display: flex;
+  flex-direction: row;
+  height: 10vh;
+  width: 100vw;
+}
+
+.trackorder_midbanner {
+  display: flex;
+  margin-top: 10px;
+  flex-direction: row;
+  height: 85vh;
+  width: 100vw;
+  position: relative;
+}
+
+.trackorder_map_wrapper {
+  width: 70vw;
+  height: 80vh;
+}
+.trackorder_map {
+  width: 100%;
+  height: 100%;
+  margin-left: 10px;
+  border: 1px solid black;
+}
+
+.trackorder_right {
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+  margin: 0px 10px;
+}
+.trackorder_list_wrapper {
+  height: 70vh;
+  background-color: bisque;
+}
+
+.trackorder_button {
+  width: 100%;
+  height: 63px;
+}
+
+.trackorder_midbanner ::-webkit-scrollbar {
+  width: 10px;
+}
+
+.trackorder_midbanner ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.trackorder_midbanner ::-webkit-scrollbar-thumb {
+  background: #d2a124;
+  border-radius: 10px;
+}
+
+.trackorder_midbanner ::-webkit-scrollbar-thumb:hover {
+  background: #ffc400;
+}
