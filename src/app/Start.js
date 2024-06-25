@@ -25,11 +25,6 @@ export default function Start() {
 					</Link>
 				</div>
 			</div>
-			<div className="bot_banner">
-				<button className="login_btn">login</button>
-				<div> | </div>
-				<button className="aboutus_btn">about us</button>
-			</div>
 		</div>
 	);
 }
