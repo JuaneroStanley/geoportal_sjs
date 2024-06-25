@@ -43,13 +43,11 @@ function NewOrder() {
 	const mapRef = useRef();
 
 	useEffect(() => {
-		console.log("Map component mounted");
 		const getData = async () => {
 			const response = await fetch(
 				"http://localhost:8080/geoserver/ne/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ne%3Arestaurants&maxFeatures=50&outputFormat=application%2Fjson"
 			);
 			const data = await response.json();
-			console.log(data.features);
 			setMapData(data.features);
 		};
 		getData();
