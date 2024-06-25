@@ -1,0 +1,72 @@
+.orderhistory_all {
+	height: 100vh;
+}
+
+.orderhistory_topbanner {
+	display: flex;
+	flex-direction: row;
+	height: 10vh;
+	width: 95vw;
+}
+
+.orderhistory_midbanner {
+	display: flex;
+	margin-top: 10px;
+	flex-direction: row;
+	height: 75vh;
+	width: 92vw;
+	position: relative;
+	margin: 5%;
+}
+
+.orderhistory_orderslist_wrapper {
+	height: 75vh;
+	width: 30vw;
+	border: 2px solid #d2a124;
+	border-radius: 2.5%;
+}
+.orderhistory_orderdetails_wrapper {
+	height: 100%;
+	width: 60vw;
+	margin-left: 15px;
+}
+.orderhistory_title {
+	margin: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 20px;
+	width: 100%;
+	height: auto;
+}
+
+.orderhistory_orderdetails {
+	height: 55vh;
+	width: 100%;
+	border: 2px solid #d2a124;
+	border-radius: 2.5%;
+}
+
+.orderhistory_midbanner ::-webkit-scrollbar {
+	width: 10px;
+}
+
+.orderhistory_midbanner ::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 2.5%;
+}
+
+.orderhistory_midbanner ::-webkit-scrollbar-thumb {
+	background: #d2a124;
+	border-radius: 10px;
+}
+
+.orderhistory_midbanner ::-webkit-scrollbar-thumb:hover {
+	background: #ffc400;
+}
+
+.orderhistory_button_wrapper {
+	display: flex;
+	justify-content: space-between;
+	margin: 10px 100px;
+}
